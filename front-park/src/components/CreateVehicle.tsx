@@ -17,8 +17,8 @@ type VehicleData = {
 
 const VehicleSchema = yup.object({
   plate: yup.string().required().label('Plate Number'),
-  type: yup.string().required().label('Vehicle Type'),
-  size: yup.string().required().label('Vehicle Size'),
+  type: yup.string().oneOf(['car', 'motorcycle', 'truck']).required().label('Vehicle Type'),
+  size: yup.string().oneOf(['small', 'medium', 'large']).required().label('Vehicle Size'),
   model: yup.string().required().label('Model'),
   color: yup.string().required().label('Color'),
 });
@@ -66,7 +66,7 @@ const CreateVehicle = () => {
         <form onSubmit={handleSubmit(onSubmit)} className="mt-3 w-9/12 flex flex-col items-center">
           <div className="w-full flex flex-col items-center gap-x-6">
             {/* Plate Number */}
-            <div className="w-full sm:w-[70%] mx-2 plg:mx-0 plg:w-full plg:my-4">
+            <div className="w-full sm:w-[70%] mx-2 lg:mx-0 lg:w-full lg:my-4">
               <span className="font-semibold text-lg">Plate Number</span>
               <input
                 placeholder="ABC123"
@@ -78,7 +78,7 @@ const CreateVehicle = () => {
             </div>
 
             {/* Model */}
-            <div className="w-full sm:w-[70%] mx-2 plg:mx-0 plg:w-full plg:my-4">
+            <div className="w-full sm:w-[70%] mx-2 lg:mx-0 lg:w-full lg:my-4">
               <span className="font-semibold text-lg">Model</span>
               <input
                 placeholder="Toyota Corolla"
@@ -90,31 +90,37 @@ const CreateVehicle = () => {
             </div>
 
             {/* Vehicle Type */}
-            <div className="w-full sm:w-[70%] mx-2 plg:mx-0 plg:w-full plg:my-4">
+            <div className="w-full sm:w-[70%] mx-2 lg:mx-0 lg:w-full lg:my-4">
               <span className="font-semibold text-lg">Type</span>
-              <input
-                placeholder="e.g. car, motorcycle"
-                type="text"
+              <select
                 {...register('type')}
                 className="bg-transparent border border-gray-200 rounded focus:outline-none text-sm font-medium leading-none text-gray-800 py-3 placeholder:font-normal w-full pl-3"
-              />
+              >
+                <option value="" disabled selected>Select Vehicle Type</option>
+                <option value="car">Car</option>
+                <option value="motorcycle">Motorcycle</option>
+                <option value="truck">Truck</option>
+              </select>
               {errors.type && <span className="text-red-400 text-[16px]">{errors.type.message}</span>}
             </div>
 
             {/* Vehicle Size */}
-            <div className="w-full sm:w-[70%] mx-2 plg:mx-0 plg:w-full plg:my-4">
+            <div className="w-full sm:w-[70%] mx-2 lg:mx-0 lg:w-full lg:my-4">
               <span className="font-semibold text-lg">Size</span>
-              <input
-                placeholder="e.g. small, medium, large"
-                type="text"
+              <select
                 {...register('size')}
                 className="bg-transparent border border-gray-200 rounded focus:outline-none text-sm font-medium leading-none text-gray-800 py-3 placeholder:font-normal w-full pl-3"
-              />
+              >
+                <option value="" disabled selected>Select Vehicle Size</option>
+                <option value="small">Small</option>
+                <option value="medium">Medium</option>
+                <option value="large">Large</option>
+              </select>
               {errors.size && <span className="text-red-400 text-[16px]">{errors.size.message}</span>}
             </div>
 
             {/* Vehicle Color */}
-            <div className="w-full sm:w-[70%] mx-2 plg:mx-0 plg:w-full plg:my-4">
+            <div className="w-full sm:w-[70%] mx-2 lg:mx-0 lg:w-full lg:my-4">
               <span className="font-semibold text-lg">Color</span>
               <input
                 placeholder="e.g. red, black"
