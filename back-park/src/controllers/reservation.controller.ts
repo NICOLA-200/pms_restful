@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import prisma from '../prisma/prisma-client';
 import ServerResponse from '../utils/ServerResponse';
 import { AuthRequest } from '../types';
+import { sendSlotApprovalEmail } from '../utils/emailService'; 
 
 
 
@@ -183,19 +184,90 @@ const getReservations = async (req: Request, res: Response) => {
   }
 };
 
+
+
+
 const approveReservation = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
+
+    // Fetch reservation with related vehicle, user, and parking slot
+    const reservation = await prisma.reservation.findUnique({
+      where: { id: Number(id) },
+      include: {
+        vehicle: true,
+        user: true,
+        parkingSlot: true,
+      },
+    });
+
+    if (!reservation) {
+      return ServerResponse.error(res, 'Reservation not found', { status: 404 });
+    }
+
+    if (reservation.status !== 'PENDING') {
+      return ServerResponse.error(res, 'Reservation is not pending', { status: 400 });
+    }
+
+    let parkingSlotId = reservation.parkingSlotId;
+    let slotCode = reservation.parkingSlot?.slotCode;
+
+    // Assign a compatible slot if not already assigned
+    if (!parkingSlotId) {
+      const compatibleSlot = await prisma.parkingSlot.findFirst({
+        where: {
+          status: 'available',
+          // vehicleType: reservation.vehicle.type || undefined,
+          // size: reservation.vehicle.size || undefined,
+        },
+      });
+
+      if (!compatibleSlot) {
+        return ServerResponse.error(res, 'No compatible parking slot available', { status: 400 });
+      }
+
+      parkingSlotId = compatibleSlot.id;
+      slotCode = compatibleSlot.slotCode;
+
+      // Update parking slot status to unavailable
+      await prisma.parkingSlot.update({
+        where: { id: compatibleSlot.id },
+        data: { status: 'unavailable' },
+      });
+    }
+
+    // Update reservation to APPROVED
     const updated = await prisma.reservation.update({
       where: { id: Number(id) },
       data: {
         status: 'APPROVED',
-        
+        parkingSlotId,
+        updatedAt: new Date(),
+      },
+      include: {
+        vehicle: true,
+        user: true,
+        parkingSlot: true,
       },
     });
+
+    // Send approval email, but don't fail if email sending fails
+    try {
+      await sendSlotApprovalEmail({
+        to: updated.user.email,
+        slotCode: updated.parkingSlot!.slotCode,
+        plate: updated.vehicle.plate,
+        timestamp: updated.updatedAt.toISOString(),
+      });
+    } catch (emailError) {
+      console.error(`Failed to send approval email to ${updated.user.email}:`, emailError);
+      // Continue with success response despite email failure
+    }
+
     return ServerResponse.success(res, 'Reservation approved', updated);
   } catch (error) {
-    return ServerResponse.error(res, 'Error approving reservation', error);
+    console.error('Error approving reservation:', error);
+    return ServerResponse.error(res, 'Error approving reservation', { error });
   }
 };
 
@@ -206,11 +278,15 @@ const rejectReservation = async (req: Request, res: Response) => {
       where: { id: Number(id) },
       data: {
         status: 'REJECTED',
+        updatedAt: new Date(),
       },
     });
+
+    
     return ServerResponse.success(res, 'Reservation rejected', updated);
   } catch (error) {
-    return ServerResponse.error(res, 'Error rejecting reservation', error);
+    console.error('Error rejecting reservation:', error);
+    return ServerResponse.error(res, 'Error rejecting reservation', { error });
   }
 };
 

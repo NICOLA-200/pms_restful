@@ -5,10 +5,12 @@ import { getVehicles } from "@/services/vehicle";
 import { DataTable, DataTableColumn } from "mantine-datatable";
 import React, { useContext, useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
-import { BiCheck, BiEdit, BiSearch, BiTrash, BiX } from "react-icons/bi";
+import { BiEdit, BiSearch, BiTrash, } from "react-icons/bi";
 import { Modal, Select, Button } from "@mantine/core";
 import { IReservation, IVehicle,  } from "@/types";
 import Header from "@/components/Header";
+import { MdCancel } from "react-icons/md";
+import { FcOk } from "react-icons/fc";
 
 const Reservations: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -68,14 +70,14 @@ const Reservations: React.FC = () => {
                   className="text-green-500"
                   disabled={actionLoading}
                 >
-                  <BiCheck size={20} />
+                  <FcOk  size={25}/>
                 </button>
                 <button
                   onClick={() => handleReject(record.id)}
                   className="text-red-500"
                   disabled={actionLoading}
                 >
-                  <BiX size={20} />
+                  <MdCancel size={25} />
                 </button>
               </>
             ) : (

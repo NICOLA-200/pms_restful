@@ -38,7 +38,7 @@ const Register: React.FC = () => {
     }
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-sky-600 py-6 px-4">
+        <div className="min-h-screen flex items-center justify-center bg-[#E2E9ED] py-6 px-4">
             <Helmet>
                 <title>Register</title>
             </Helmet>
