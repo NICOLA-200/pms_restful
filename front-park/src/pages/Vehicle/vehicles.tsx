@@ -4,13 +4,11 @@ import { getVehicles, updateVehicle, deleteVehicle } from "@/services/vehicle";
 import { DataTable, DataTableColumn } from "mantine-datatable";
 import React, { useContext, useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
-import toast from "react-hot-toast";
 import { BiEdit, BiPlus, BiSearch, BiTrash } from "react-icons/bi";
 import { Modal, TextInput, Select, Button } from "@mantine/core";
 import { IVehicle } from "@/types";
 
-
-import Navbar from "@/components/Navbar";
+import Header from "@/components/Header";
 
 const Home: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -23,7 +21,7 @@ const Home: React.FC = () => {
   const [formData, setFormData] = useState<Partial<IVehicle>>({});
   
 
-  const { user, setShowCreateVehicle, vehicles, setVehicles, setMeta, meta } =
+  const { setShowCreateVehicle, vehicles, setVehicles, setMeta, meta } =
     useContext(CommonContext);
 
   const columns: DataTableColumn<IVehicle>[] = [
@@ -74,7 +72,7 @@ const Home: React.FC = () => {
               });
               setShowUpdateModal(true);
             }}
-            className="text-blue-500"
+            className="text-sky-600"
             disabled={actionLoading}
           >
             <BiEdit size={20} />
@@ -146,16 +144,16 @@ const Home: React.FC = () => {
         <title>Home</title>
       </Helmet>
       <div className="w-10/12  flex flex-col ">
-    
+           <Header />
         <div className="my-14 mx-1 md:mx-4">
           <div className="w-full justify-between flex items-center mb-6">
             <span className="text-xl">Your Registered Vehicles</span>
             <button
               onClick={() => setShowCreateVehicle(true)}
-              className="bg-primary-blue flex items-center px-6 h-14 rounded-lg text-white"
+              className="bg-sky-600 flex items-center px-6 h-14 rounded-lg text-white"
             >
               <BiPlus color="white" className="mr-3" size={25} />
-              <span>Add Vehicle</span>
+              <span className="font-bold">Add Vehicle</span>
             </button>
           </div>
 
@@ -170,7 +168,7 @@ const Home: React.FC = () => {
             />
             <button
               onClick={handleSearch}
-              className="bg-primary-blue flex items-center justify-center px-4 rounded-lg text-white"
+              className="bg-sky-600 flex items-center justify-center px-4 rounded-lg text-white"
               disabled={loading}
             >
               <BiSearch size={20} />
@@ -181,6 +179,9 @@ const Home: React.FC = () => {
             records={vehicles}
             columns={columns}
             page={page}
+              styles={{
+    table: { fontSize: '18px' }, // sets font size for the whole table
+  }}
             recordsPerPage={limit}
             loadingText={loading ? "Loading..." : "Rendering..."}
             onPageChange={setPage}
@@ -192,7 +193,7 @@ const Home: React.FC = () => {
             striped
             totalRecords={meta?.total}
             highlightOnHover
-            onRowClick={({ record }) => toast.success(`Vehicle: ${record.plate} clicked!`)}
+            onRowClick={({ record }) => console.log(record)}
             noRecordsText="No vehicles found"
           />
 

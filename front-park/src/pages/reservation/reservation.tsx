@@ -5,10 +5,10 @@ import { getVehicles } from "@/services/vehicle";
 import { DataTable, DataTableColumn } from "mantine-datatable";
 import React, { useContext, useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
-import toast from "react-hot-toast";
 import { BiCheck, BiEdit, BiSearch, BiTrash, BiX } from "react-icons/bi";
 import { Modal, Select, Button } from "@mantine/core";
 import { IReservation, IVehicle,  } from "@/types";
+import Header from "@/components/Header";
 
 const Reservations: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -193,9 +193,9 @@ const Reservations: React.FC = () => {
       <Helmet>
         <title>Reservations</title>
       </Helmet>
-      <div className="w-10/12 flex flex-col px-14 pt-8">
-        <span className="text-lg font-semibold">Welcome {user?.firstName}</span>
-        <div className="my-14">
+   <div className="w-10/12  flex flex-col ">
+           <Header />
+        <div className="my-14 mx-1 md:mx-4">
           <div className="w-full justify-between flex items-center mb-6">
             <span className="text-xl">Your Reservations</span>
           </div>
@@ -231,6 +231,9 @@ const Reservations: React.FC = () => {
             borderRadius="sm"
             withColumnBorders
             striped
+              styles={{
+    table: { fontSize: '18px' }, // sets font size for the whole table
+  }}
             totalRecords={meta?.total}
             highlightOnHover
             noRecordsText="No reservations found"

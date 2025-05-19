@@ -44,12 +44,12 @@ const VehicleSchema = yup.object({
     return (
         <div className='fixed w-screen h-screen bg-black/60 backdrop-blur-md flex justify-center z-30'>
             <div className='z-30 w-full h-full absolute' onClick={() => setShowCreateVehicle(false)}></div>
-            <div className='bg-white w-11/12 md:w-6/12 lg:w-5/12 xl:w-4/12 flex flex-col p-6 rounded-lg z-50  mt-14 mb-14 justify-center items-center'>
-                <span className='font-semibold text-xl text-primary-blue'>Create New Vehicle</span>
-                <form onSubmit={handleSubmit(onSubmit)} className='mt-8 w-9/12 flex flex-col items-center'>
+            <div className='bg-white w-11/12 md:w-6/12 lg:w-6/12 xl:w-4/12 flex flex-col p-6  rounded-lg z-50  mt-10 mb-10 justify-center items-center'>
+                <span className='font-semibold text-xl text-sky-600'>Create New Vehicle</span>
+                <form onSubmit={handleSubmit(onSubmit)} className='mt-3 w-9/12 flex flex-col items-center'>
 
-                    <div className='w-full flex  flex-col items-center my-2 gap-y-5 gap-x-6'>
-                        <div className='w-full sm:w-1/2 mx-2 plg:mx-0 plg:w-full plg:my-4'>
+                    <div className='w-full flex  flex-col items-center gap-x-6'>
+                        <div className='w-full sm:w-[70%] mx-2 plg:mx-0 plg:w-full plg:my-4'>
                             <span className='font-semibold text-lg'>Plate Number</span>
                             <input
                                 placeholder='ABC123'
@@ -60,7 +60,7 @@ const VehicleSchema = yup.object({
                             {errors.plate && <span className='text-red-400 text-[16px]'>{errors?.plate?.message}</span>}
                         </div>
 
-                        <div className='w-full sm:w-1/2 mx-2 plg:mx-0 plg:w-full plg:my-4'>
+                        <div className='w-full sm:w-[70%] mx-2 plg:mx-0 plg:w-full plg:my-4'>
                             <span className='font-semibold text-lg'>Model</span>
                             <input
                                 placeholder='Toyota Corolla'
@@ -72,7 +72,7 @@ const VehicleSchema = yup.object({
                         </div>
 
                         {/* Vehicle Type */}
-<div className='w-full sm:w-1/2 mx-2 plg:mx-0 plg:w-full plg:my-4'>
+<div className='w-full sm:w-[70%] mx-2 plg:mx-0 plg:w-full plg:my-4'>
   <span className='font-semibold text-lg'>Type</span>
   <input
     placeholder='e.g. car, motorcycle'
@@ -84,7 +84,7 @@ const VehicleSchema = yup.object({
 </div>
 
 {/* Vehicle Size */}
-<div className='w-full sm:w-1/2 mx-2 plg:mx-0 plg:w-full plg:my-4'>
+<div className='w-full sm:w-[70%] mx-2 plg:mx-0 plg:w-full plg:my-4'>
   <span className='font-semibold text-lg'>Size</span>
   <input
     placeholder='e.g. small, medium, large'
@@ -96,7 +96,7 @@ const VehicleSchema = yup.object({
 </div>
 
 {/* Vehicle Color */}
-<div className='w-full sm:w-1/2 mx-2 plg:mx-0 plg:w-full plg:my-4'>
+<div className='w-full sm:w-[70%] mx-2 plg:mx-0 plg:w-full plg:my-4'>
   <span className='font-semibold text-lg'>Color</span>
   <input
     placeholder='e.g. red, black'

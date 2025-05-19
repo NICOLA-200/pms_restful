@@ -4,7 +4,7 @@ import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import App from './App';
 import './index.css';
-import ErrorBoundary from './pages/500/ErrorBoundary';
+import ErrorBoundary from './pages/error/ErrorBoundary';
 import { persistor, store } from './redux/store';
 import THEME from './theme';
 import { MantineProvider } from '@mantine/core';

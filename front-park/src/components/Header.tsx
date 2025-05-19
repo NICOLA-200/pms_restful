@@ -1,18 +1,22 @@
-import React from 'react'
-import { useNavigate } from "react-router-dom";
+import { CommonContext } from '@/context';
+import  { useContext } from 'react'
+import { Link } from 'react-router-dom';
+
+
 
 
 export default function Header() {
 
-    const navigate  = useNavigate()
+   const { user} =
+      useContext(CommonContext);
+
+   
   return (
-     <div className="bg-white p-8 flex justify-between items-center"> 
+     <div className="bg-white  p-3 md:p-5 flex justify-between items-center"> 
             <span className="text-lg font-semibold">Welcome {user?.firstName}</span> 
             
-                 <button onClick={() => navigate('/profile')} className='flex items-center rounded-lg p-3 hover:bg-slate-300/60'>
-                         
-                          <CgProfile  size={30} className='text-black min-h-6 min-w-6' />
-                         <span className='ml-2 text-lg truncate whitespace-nowrap overflow-hidden hidden mlg:block text-black'>profile</span>
-                     </button></div>
+                 <Link to={"/profile"}>
+                           <img src="https://picsum.photos/200/300" className='w-12 h-12 rounded-full object-cover' alt="" />
+                 </Link></div>
   )
 }

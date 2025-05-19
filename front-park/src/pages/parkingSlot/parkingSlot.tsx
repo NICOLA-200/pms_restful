@@ -8,6 +8,7 @@ import { Helmet } from "react-helmet";
 import { BiEdit, BiPlus, BiSearch, BiTrash } from "react-icons/bi";
 import { Modal, TextInput, Select, Button } from "@mantine/core";
 import { IParkingSlot } from "@/types";
+import Header from "@/components/Header";
 
 const ParkingSlotsList: React.FC = () => {
   const [loading, setLoading] = useState(false);
@@ -60,7 +61,7 @@ const ParkingSlotsList: React.FC = () => {
       title: "Actions",
       hidden: !isAdmin,
       render: (record) => (
-        <div className="flex gap-2">
+        <div className="flex gap-3 ">
           <button
             onClick={() => {
               setSelectedSlot(record);
@@ -73,17 +74,17 @@ const ParkingSlotsList: React.FC = () => {
               });
               setShowUpdateModal(true);
             }}
-            className="text-blue-500"
+            className="text-blue-500 hover:text-blue-800"
             disabled={actionLoading}
           >
-            <BiEdit size={20} />
+            <BiEdit size={30} />
           </button>
           <button
             onClick={() => handleDelete(record.id)}
-            className="text-red-500"
+            className="text-red-500 hover:text-red-800"
             disabled={actionLoading}
           >
-            <BiTrash size={20} />
+            <BiTrash size={30} />
           </button>
         </div>
       ),
@@ -143,26 +144,26 @@ const ParkingSlotsList: React.FC = () => {
       <Helmet>
         <title>Parking Slots</title>
       </Helmet>
-      <div className="w-10/12 flex flex-col px-14 pt-8">
-        <span className="text-lg font-semibold">Welcome {user?.firstName}</span>
-        <div className="my-14">
+   <div className="w-10/12  flex flex-col ">
+           <Header />
+        <div className="my-14 mx-1 md:mx-4">
           <div className="w-full justify-between flex items-center mb-6">
             <span className="text-xl">Parking Slots</span>
             {isAdmin ? (
               <button
                 onClick={() => setShowCreateParkingSlot(true)}
-                className="bg-primary-blue flex items-center px-6 h-14 rounded-lg text-white"
+                className="bg-sky-600 flex items-center px-6 h-14 rounded-lg text-white"
               >
                 <BiPlus color="white" className="mr-3" size={25} />
-                <span>Add Slot</span>
+                <span className="font-bold">Add Slot</span>
               </button>
             ) : (
               <button
                 onClick={() => setShowRequestParkingSlot(true)}
-                className="bg-primary-blue flex items-center px-6 h-14 rounded-lg text-white"
+                className="bg-sky-600 flex items-center px-6 h-14 rounded-lg text-white"
               >
                 <BiPlus color="white" className="mr-3" size={25} />
-                <span>Request Slot</span>
+                <span className="font-bold">Request Slot</span>
               </button>
             )}
           </div>
@@ -178,7 +179,7 @@ const ParkingSlotsList: React.FC = () => {
             />
             <button
               onClick={handleSearch}
-              className="bg-primary-blue flex items-center justify-center px-4 rounded-lg text-white"
+              className="bg-sky-600 flex items-center justify-center px-4 rounded-lg text-white"
               disabled={loading}
             >
               <BiSearch size={20} />
@@ -189,6 +190,9 @@ const ParkingSlotsList: React.FC = () => {
             records={parkingSlots}
             columns={columns}
             page={page}
+              styles={{
+    table: { fontSize: '18px' }, // sets font size for the whole table
+  }}
             recordsPerPage={limit}
             loadingText={loading ? "Loading..." : "Rendering..."}
             onPageChange={setPage}
