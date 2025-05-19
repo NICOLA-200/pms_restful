@@ -91,3 +91,17 @@ User authentication with role-based access (USER, ADMIN).
 ### Pagination:
  Paginated data tables for vehicles, parking slots, and (future) requests.
 
+
+ # SERVER
+PORT =3000
+
+DATABASE_URL=postgresql://nicola@localhost:5432/parking?schema=public
+
+# JWT
+JWT_SECRET_KEY = "secret"
+JWT_EXPIRES_IN = 86400
+
+EMAIL_USER=fatepepe66@gmail.com
+EMAIL_PASS=vayh ynaf ndoe gbsupost
+
+
