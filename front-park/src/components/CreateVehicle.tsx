@@ -11,6 +11,7 @@ const CreateVehicle = () => {
     const { setShowCreateVehicle, setVehicles, setMeta } = useContext(CommonContext)
     const [loading, setLoading] = useState<boolean>(false)
 type VehicleData = {
+  userId: number
   plate: string
   type: string
   size: string
@@ -19,6 +20,7 @@ type VehicleData = {
 }
 
 const VehicleSchema = yup.object({
+  userId: yup.string().required().label("userId"),
   plate: yup.string().required().label("Plate Number"),
   type: yup.string().required().label("Vehicle Type"),
   size: yup.string().required().label("Vehicle Size"),

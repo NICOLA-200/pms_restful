@@ -253,7 +253,7 @@ const Reservations: React.FC = () => {
                 label="Select Vehicle"
                 placeholder="Choose a vehicle"
                 data={vehicles.map((vehicle) => ({
-                  value: vehicle?.id.toString(),
+                  value: vehicle.id.toString(),
                   label: `${vehicle.plate} - ${vehicle.model || "Unknown"}`,
                 }))}
                 value={selectedVehicleId}

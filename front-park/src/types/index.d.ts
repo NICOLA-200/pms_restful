@@ -14,7 +14,7 @@ export interface IUser extends TimestampAudit {
 
 export interface IVehicle extends TimestampAudit {
  
-  id?: number;
+  id?: number | null;
   userId: number;
   plate: string;
   model: string | null;
